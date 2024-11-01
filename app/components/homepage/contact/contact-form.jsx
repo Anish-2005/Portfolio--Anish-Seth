@@ -49,11 +49,13 @@ function ContactForm() {
       });
     } catch (error) {
       console.error('Error sending message:', error); // Log the error for debugging
-      toast.error(error?.response?.data?.message || 'Something went wrong!');
+      // Removed error popup
+      // toast.error(error?.response?.data?.message || 'Something went wrong!');
     } finally {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div>
