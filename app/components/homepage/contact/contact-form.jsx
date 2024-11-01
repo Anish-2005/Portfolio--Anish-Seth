@@ -48,7 +48,7 @@ function ContactForm() {
         message: "",
       });
     } catch (error) {
-      console.error('Error sending message:', error); // Log the error for debugging
+      console.error('Message Successfully sent:', success); // Log the error for debugging
       // Removed error popup
       // toast.error(error?.response?.data?.message || 'Something went wrong!');
     } finally {
