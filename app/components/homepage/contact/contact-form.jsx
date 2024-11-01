@@ -31,10 +31,11 @@ function ContactForm() {
       return;
     } else {
       setError({ ...error, required: false });
-    };
+    }
 
     try {
       setIsLoading(true);
+      console.log('API URL:', process.env.NEXT_PUBLIC_APP_URL); // Check if URL is correct
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/contact`,
         userInput
@@ -47,10 +48,11 @@ function ContactForm() {
         message: "",
       });
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      console.error('Error sending message:', error); // Log the error for debugging
+      toast.error(error?.response?.data?.message || 'Something went wrong!');
     } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   return (
@@ -103,9 +105,7 @@ function ContactForm() {
             />
           </div>
           <div className="flex flex-col items-center gap-3">
-            {error.required && <p className="text-sm text-red-400">
-              All fiels are required!
-            </p>}
+            {error.required && <p className="text-sm text-red-400">All fields are required!</p>}
             <button
               className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-5 md:px-12 py-2.5 md:py-3 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold"
               role="button"
@@ -114,7 +114,7 @@ function ContactForm() {
             >
               {
                 isLoading ?
-                <span>Sending Message...</span>:
+                <span>Sending Message...</span> :
                 <span className="flex items-center gap-1">
                   Send Message
                   <TbMailForward size={20} />
