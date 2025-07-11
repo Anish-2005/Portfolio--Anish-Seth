@@ -1,4 +1,5 @@
-import axios from 'axios';
+export const runtime = 'nodejs';
+// import axios from 'axios';
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -18,14 +19,24 @@ const transporter = nodemailer.createTransport({
 async function sendTelegramMessage(token, chat_id, message) {
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   try {
-    const res = await axios.post(url, {
-      text: message,
-      chat_id,
+    console.log('[Telegram] Sending message (fetch):', { url, chat_id, message });
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: message,
+        chat_id,
+      }),
     });
-    return res.data.ok;
+    const data = await res.json();
+    console.log('[Telegram] Response:', data);
+    return { ok: data.ok, error: null, data };
   } catch (error) {
-    console.error('Error sending Telegram message:', error.response?.data || error.message);
-    return false;
+    // Log the full error object for debugging
+    console.error('[Telegram] Error sending message (fetch):', error);
+    return { ok: false, error: error.message, data: null };
   }
 };
 
@@ -50,12 +61,12 @@ async function sendEmail(payload, message) {
   const { name, email, message: userMessage } = payload;
   
   const mailOptions = {
-    from: "Portfolio", 
-    to: process.env.EMAIL_ADDRESS, 
-    subject: `New Message From ${name}`, 
-    text: message, 
-    html: generateEmailTemplate(name, email, userMessage), 
-    replyTo: email, 
+    from: "Portfolio",
+    to: email, // Send to the user's entered email
+    subject: `New Message From ${name}`,
+    text: message,
+    html: generateEmailTemplate(name, email, userMessage),
+    replyTo: email,
   };
   
   try {
@@ -74,6 +85,10 @@ export async function POST(request) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chat_id = process.env.TELEGRAM_CHAT_ID;
 
+    // Log environment variables (mask secrets)
+    console.log('[API] TELEGRAM_BOT_TOKEN present:', !!token);
+    console.log('[API] TELEGRAM_CHAT_ID:', chat_id);
+
     // Validate environment variables
     if (!token || !chat_id) {
       return NextResponse.json({
@@ -85,27 +100,67 @@ export async function POST(request) {
     const message = `New message from ${name}\n\nEmail: ${email}\n\nMessage:\n\n${userMessage}\n\n`;
 
     // Send Telegram message
-    const telegramSuccess = await sendTelegramMessage(token, chat_id, message);
+    const telegramResult = await sendTelegramMessage(token, chat_id, message);
+    console.log('[API] Telegram full response:', telegramResult);
+    if (!telegramResult.ok) {
+      console.error('[API] Telegram message failed to send.', telegramResult.error);
+    }
 
     // Send email
     const emailSuccess = await sendEmail(payload, message);
+    if (!emailSuccess) {
+      console.error('[API] Email failed to send.');
+    }
 
-    if (telegramSuccess && emailSuccess) {
+    if (telegramResult.ok && emailSuccess) {
       return NextResponse.json({
         success: true,
         message: 'Message and email sent successfully!',
+        telegram: telegramResult.data,
       }, { status: 200 });
     }
 
     return NextResponse.json({
       success: false,
-      message: 'Failed to send message or email.',
+      message: `Failed to send message or email. Telegram: ${telegramResult.ok}, Email: ${emailSuccess}`,
+      telegramError: telegramResult.error,
+      telegramResponse: telegramResult.data,
     }, { status: 500 });
   } catch (error) {
     console.error('API Error:', error.message);
     return NextResponse.json({
       success: false,
       message: 'Server error occurred.',
+      error: error.message,
     }, { status: 500 });
   }
-};
+}
+
+// Add a GET endpoint for direct Telegram testing
+export async function GET() {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chat_id = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chat_id) {
+    return NextResponse.json({
+      success: false,
+      message: 'Telegram token or chat ID is missing.',
+    }, { status: 400 });
+  }
+  const testMessage = 'Test message from Portfolio API (GET /api/contact)';
+  const telegramResult = await sendTelegramMessage(token, chat_id, testMessage);
+  console.log('[API] Telegram test full response:', telegramResult);
+  if (telegramResult.ok) {
+    return NextResponse.json({
+      success: true,
+      message: 'Test message sent to Telegram!',
+      telegram: telegramResult.data,
+    }, { status: 200 });
+  } else {
+    return NextResponse.json({
+      success: false,
+      message: 'Failed to send test message to Telegram.',
+      telegramError: telegramResult.error,
+      telegramResponse: telegramResult.data,
+    }, { status: 500 });
+  }
+}
