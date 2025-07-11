@@ -33,7 +33,7 @@ const ContactForm = () => {
     }
   };
 
-  const handleSendMail = async (e: FormEvent<HTMLButtonElement>): Promise<void> => {
+  const handleSendMail = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     if (!userInput.email || !userInput.message || !userInput.name) {
@@ -100,7 +100,7 @@ const ContactForm = () => {
           Ready to bring your ideas to life? I&apos;m passionate about creating innovative solutions and would love to discuss how we can work together on your next project.
         </p>
 
-        <div className="space-y-6">
+        <form onSubmit={handleSendMail} className="space-y-6">
           {/* Name Field */}
           <motion.div 
             className="space-y-2"
@@ -215,8 +215,8 @@ const ContactForm = () => {
             )}
             
             <motion.button
+              type="submit"
               className="w-full bg-gradient-to-r from-accent-500 to-primary-500 hover:from-accent-400 hover:to-primary-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
-              onClick={handleSendMail}
               disabled={isLoading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -242,7 +242,7 @@ const ContactForm = () => {
               )}
             </motion.button>
           </motion.div>
-        </div>
+        </form>
       </motion.div>
     </motion.div>
   );
