@@ -46,19 +46,20 @@ const AboutSection = () => {
 
       {/* Section Label */}
       <div className="hidden lg:flex flex-col items-center absolute top-16 -right-4">
-        <motion.span 
-          className=" bg-primary-600/20 backdrop-blur-sm border border-primary-500/30 text-primary-300 rotate-90 p-3 px-6 text-sm font-bold rounded-lg tracking-wider"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+        <motion.span
+          className="bg-primary-600/20 backdrop-blur-sm border border-primary-500/30 text-primary-300 rotate-90 p-3 px-6 text-sm font-bold rounded-lg tracking-wider shadow-lg"
+          initial={{ opacity: 0, x: 60, scale: 0.8, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
+          transition={{ type: 'spring', stiffness: 120, damping: 12, duration: 0.7 }}
         >
           ABOUT ME
         </motion.span>
-        <motion.span 
+        <motion.span
           className="h-36 w-[2px] bg-gradient-to-b from-primary-500 to-transparent mt-4"
-          initial={{ height: 0 }}
-          whileInView={{ height: 144 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          initial={{ scaleY: 0, opacity: 0, filter: 'blur(8px)' }}
+          whileInView={{ scaleY: 1, opacity: 1, filter: 'blur(0px)' }}
+          transition={{ type: 'spring', stiffness: 100, damping: 14, duration: 0.8, delay: 0.2 }}
+          style={{ transformOrigin: 'top' }}
         ></motion.span>
       </div>
 
@@ -108,21 +109,19 @@ const AboutSection = () => {
 
             {/* Stats */}
             <motion.div 
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 w-full min-w-0 max-w-full overflow-x-hidden"
               variants={itemVariants}
             >
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="text-center group"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  className="text-center group min-w-0 max-w-full"
                 >
-                  <div className="classic-card p-4 border-primary-500/20 hover:border-primary-400/40">
-                    <div className="text-2xl md:text-3xl font-bold text-primary-400 mb-2 heading-primary">
+                  <div className="classic-card p-6 md:p-8 border-primary-500/20 flex flex-col justify-center items-center h-28 min-h-[7rem] w-full min-w-0 max-w-full">
+                    <div className="text-2xl md:text-3xl font-bold text-primary-400 mb-2 heading-primary break-words min-w-0">
                       {stat.number}
                     </div>
-                    <div className="text-secondary-400 text-sm font-medium">
+                    <div className="text-secondary-400 text-sm font-medium break-words min-w-0">
                       {stat.label}
                     </div>
                   </div>
@@ -176,33 +175,7 @@ const AboutSection = () => {
                   </div>
                 </motion.div>
 
-                {/* Floating Elements */}
-                <motion.div
-                  className="absolute -top-6 -right-6 w-12 h-12 bg-primary-500/20 rounded-full backdrop-blur-sm border border-primary-400/30"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    rotate: [0, 180, 360]
-                  }}
-                  transition={{ 
-                    duration: 6, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                />
-                
-                <motion.div
-                  className="absolute -bottom-4 -left-4 w-8 h-8 bg-accent-500/20 rounded-full backdrop-blur-sm border border-accent-400/30"
-                  animate={{ 
-                    y: [0, 8, 0],
-                    x: [0, 4, 0]
-                  }}
-                  transition={{ 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                />
+                {/* Floating Elements removed as requested */}
               </div>
             </motion.div>
           </motion.div>

@@ -50,7 +50,7 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
   };
 
   return (
-    <section id="blogs" className="relative section-padding border-t border-primary-500/20 overflow-hidden">
+    <section id="blogs" className="relative section-padding border-t border-primary-500/20 overflow-x-hidden">
       {/* Background Decorations */}
       <div className="absolute top-20 left-20 w-40 h-40 bg-accent-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-20 w-32 h-32 bg-primary-500/5 rounded-full blur-2xl"></div>
@@ -62,7 +62,7 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
         </div>
       </div>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 max-w-full overflow-x-hidden">
         {/* Section Header */}
         <motion.div 
           className="flex justify-center mb-16"
@@ -82,7 +82,7 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
 
         {/* Blog Grid */}
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 w-full max-w-full overflow-x-hidden"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -90,7 +90,7 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
         >
           {safeBlogs.slice(0, 6).map((blog, index) => (
             blog?.cover_image && (
-              <motion.div key={blog.id} variants={itemVariants}>
+              <motion.div key={blog.id} variants={itemVariants} className="w-full min-w-0">
                 <BlogCard blog={blog} index={index} />
               </motion.div>
             )
@@ -106,54 +106,47 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <div>
               <Link
                 href="/blog"
-                className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-primary-500 hover:from-accent-400 hover:to-primary-400 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-primary-500 text-white font-semibold py-3 px-8 rounded-full transition-none shadow-lg"
               >
                 <span>Explore All Articles</span>
-                <motion.div
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="group-hover:translate-x-1 transition-transform duration-300"
-                >
+                <div>
                   <FaArrowRight size={16} />
-                </motion.div>
+                </div>
               </Link>
-            </motion.div>
+            </div>
           </motion.div>
         )}
 
         {/* Blog Stats */}
         <motion.div 
-          className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6"
+          className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full overflow-x-hidden max-w-full"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <div className="text-center classic-card p-4 border-accent-500/20">
+          <div className="text-center classic-card p-4 border-accent-500/20 min-w-0 max-w-full">
             <div className="text-2xl font-bold text-accent-400 mb-2 heading-primary">
               {safeBlogs.length}+
             </div>
             <div className="text-secondary-400 text-sm">Articles Published</div>
           </div>
-          <div className="text-center classic-card p-4 border-primary-500/20">
+          <div className="text-center classic-card p-4 border-primary-500/20 min-w-0 max-w-full">
             <div className="text-2xl font-bold text-primary-400 mb-2 heading-primary">
               {safeBlogs.reduce((acc, blog) => acc + blog.public_reactions_count, 0)}+
             </div>
             <div className="text-secondary-400 text-sm">Total Reactions</div>
           </div>
-          <div className="text-center classic-card p-4 border-accent-500/20">
+          <div className="text-center classic-card p-4 border-accent-500/20 min-w-0 max-w-full">
             <div className="text-2xl font-bold text-accent-400 mb-2 heading-primary">
               {safeBlogs.length > 0 ? Math.round(safeBlogs.reduce((acc, blog) => acc + blog.reading_time_minutes, 0) / safeBlogs.length) : 0}
             </div>
             <div className="text-secondary-400 text-sm">Avg. Read Time</div>
           </div>
-          <div className="text-center classic-card p-4 border-primary-500/20">
+          <div className="text-center classic-card p-4 border-primary-500/20 min-w-0 max-w-full">
             <div className="text-2xl font-bold text-primary-400 mb-2 heading-primary">
               {safeBlogs.reduce((acc, blog) => acc + blog.comments_count, 0)}+
             </div>

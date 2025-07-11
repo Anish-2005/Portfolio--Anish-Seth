@@ -36,21 +36,16 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, index = 0 }) => {
         ease: "easeOut"
       }}
       viewport={{ once: true }}
-      whileHover={{ y: -8 }}
-      className="group"
+      className="group w-full min-w-0"
     >
-      <div className="classic-card overflow-hidden border-accent-500/20 hover:border-accent-400/40 transition-all duration-500 h-full">
+      <div className="classic-card overflow-hidden border-accent-500/20 transition-all duration-500 h-full w-full min-w-0">
         {/* Background Glow */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-accent-500/10 to-primary-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -inset-1 bg-gradient-to-r from-accent-500/10 to-primary-500/10 rounded-2xl blur-xl opacity-0 transition-opacity duration-500"></div>
         
-        <div className="relative h-full flex flex-col">
+        <div className="relative h-full flex flex-col w-full min-w-0">
           {/* Image Section */}
           <div className="h-44 lg:h-52 w-full cursor-pointer overflow-hidden rounded-t-xl relative">
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.4 }}
-              className="h-full w-full"
-            >
+            <div className="h-full w-full">
               <Image
                 src={blog?.cover_image}
                 height={1080}
@@ -58,30 +53,24 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, index = 0 }) => {
                 alt={blog.title}
                 className="h-full w-full object-cover"
               />
-            </motion.div>
+            </div>
             
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent opacity-0 transition-opacity duration-300"></div>
           </div>
 
           {/* Content Section */}
           <div className="p-4 sm:p-5 flex flex-col flex-1">
             {/* Meta Information */}
             <div className="flex justify-between items-center text-accent-400 text-sm mb-3">
-              <motion.p 
-                className="text-secondary-400"
-                whileHover={{ color: "#d4845c" }}
-              >
+              <p className="text-secondary-400">
                 {timeConverter(blog.published_at)}
-              </motion.p>
+              </p>
               <div className="flex items-center gap-3">
-                <motion.div 
-                  className="flex items-center gap-1 text-primary-400"
-                  whileHover={{ scale: 1.1 }}
-                >
+                <div className="flex items-center gap-1 text-primary-400">
                   <BsHeartFill size={12} />
                   <span className="text-xs">{blog.public_reactions_count}</span>
-                </motion.div>
+                </div>
                 {blog.comments_count > 0 && (
                   <motion.div 
                     className="flex items-center gap-1 text-accent-400"
