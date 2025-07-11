@@ -8,7 +8,7 @@ import { FaFacebook, FaStackOverflow, FaInstagram } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub, IoMdCall } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
-import { motion } from "framer-motion";
+import { motion, circInOut } from "framer-motion";
 import ContactForm from './contact-form';
 
 interface ContactInfo {
@@ -73,7 +73,7 @@ const ContactSection = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };

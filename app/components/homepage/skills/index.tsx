@@ -3,7 +3,7 @@
 import { skillsData } from "@/utils/data/skills";
 import { skillsImage } from "@/utils/skill-image";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, circInOut } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const Skills = () => {
@@ -40,7 +40,7 @@ const Skills = () => {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };
@@ -57,7 +57,7 @@ const Skills = () => {
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };
@@ -127,7 +127,7 @@ const Skills = () => {
         className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"
         initial={{ width: 0 }}
         whileInView={{ width: `${level}%` }}
-        transition={{ duration: 1.5, delay, ease: "easeOut" }}
+        transition={{ duration: 1.5, delay, ease: circInOut }}
         viewport={{ once: true }}
       />
     </div>

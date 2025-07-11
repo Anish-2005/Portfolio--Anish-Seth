@@ -1,7 +1,7 @@
 'use client';
 
 import { educations } from "@/utils/data/educations";
-import { motion } from "framer-motion";
+import { motion, circInOut } from "framer-motion";
 import { MdSchool, MdLocationOn, MdDateRange, MdGrade } from "react-icons/md";
 import { FaGraduationCap, FaBook, FaCertificate } from "react-icons/fa";
 import AnimationLottie from "../../helper/animation-lottie";
@@ -26,7 +26,7 @@ const Education = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };

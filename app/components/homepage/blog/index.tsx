@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { motion, circInOut } from 'framer-motion';
 import BlogCard from './blog-card';
 
 interface Blog {
@@ -44,7 +44,7 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };
@@ -65,18 +65,18 @@ const Blog: React.FC<BlogProps> = ({ blogs }) => {
       <div className="container mx-auto px-4 max-w-full overflow-x-hidden">
         {/* Section Header */}
         <motion.div 
-          className="flex justify-center mb-16"
+          className="flex justify-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="flex items-center">
-            <span className="w-24 h-[2px] bg-gradient-to-r from-transparent to-accent-500"></span>
-            <span className="bg-accent-600/20 backdrop-blur-sm border border-accent-500/30 text-accent-300 p-3 px-8 text-xl font-bold rounded-lg mx-4 heading-secondary">
+          <div className="flex items-center w-full max-w-md md:max-w-none md:justify-center">
+            <span className="w-8 md:w-24 h-[2px] bg-gradient-to-r from-transparent to-accent-500"></span>
+            <span className="bg-accent-600/20 backdrop-blur-sm border border-accent-500/30 text-accent-300 p-2 px-4 md:p-3 md:px-8 text-lg md:text-xl font-bold rounded-lg mx-2 md:mx-4 heading-secondary whitespace-nowrap">
               Latest Articles
             </span>
-            <span className="w-24 h-[2px] bg-gradient-to-l from-transparent to-accent-500"></span>
+            <span className="w-8 md:w-24 h-[2px] bg-gradient-to-l from-transparent to-accent-500"></span>
           </div>
         </motion.div>
 

@@ -2,7 +2,7 @@
 
 import { personalData } from "@/utils/data/personal-data";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, circInOut } from "framer-motion";
 import { useState } from "react";
 
 const AboutSection = () => {
@@ -26,7 +26,7 @@ const AboutSection = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };

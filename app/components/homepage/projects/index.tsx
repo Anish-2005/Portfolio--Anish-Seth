@@ -2,7 +2,7 @@
 
 import { projectsData } from '@/utils/data/projects-data';
 import ProjectCard from './project-card';
-import { motion } from "framer-motion";
+import { motion, circInOut } from "framer-motion";
 
 const Projects = () => {
   const containerVariants = {
@@ -23,13 +23,13 @@ const Projects = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };
 
   return (
-    <section id='projects' className="relative section-padding">
+    <section id='projects' className="mt-8 relative section-padding">
       {/* Background Decorations */}
       <div className="absolute top-10 left-10 w-40 h-40 bg-primary-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-20 w-32 h-32 bg-accent-500/5 rounded-full blur-2xl"></div>

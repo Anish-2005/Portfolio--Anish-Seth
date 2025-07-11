@@ -1,7 +1,7 @@
 'use client';
 
 import { experiences } from "@/utils/data/experience";
-import { motion } from "framer-motion";
+import { motion, circInOut } from "framer-motion";
 import { BsPersonWorkspace, BsCalendar, BsBuilding } from "react-icons/bs";
 import { MdWork, MdSchool } from "react-icons/md";
 import AnimationLottie from "../../helper/animation-lottie";
@@ -26,7 +26,7 @@ const Experience = () => {
       x: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: circInOut
       }
     }
   };

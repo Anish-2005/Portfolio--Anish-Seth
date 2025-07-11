@@ -33,7 +33,7 @@ const GlowCard: React.FC<GlowCardProps> = ({ children, identifier }) => {
     };
 
     const UPDATE = (event: MouseEvent | PointerEvent) => {
-      for (const CARD of CARDS) {
+      Array.from(CARDS).forEach((CARD) => {
         const CARD_BOUNDS = CARD.getBoundingClientRect();
 
         if (
@@ -60,7 +60,7 @@ const GlowCard: React.FC<GlowCardProps> = ({ children, identifier }) => {
         ANGLE = ANGLE < 0 ? ANGLE + 360 : ANGLE;
 
         CARD.style.setProperty('--start', (ANGLE + 90).toString());
-      }
+      });
     };
 
     const RESTYLE = () => {
