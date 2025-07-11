@@ -31,5 +31,5 @@ export const personalData: PersonalData = {
   stackOverflow: '',
   leetcode: '',
   devUsername: '',
-  resume: 'https://anishseth.vercel.app'
+  resume: 'https://drive.google.com/file/d/1HNWpDedJO8iUj_20rw6pISF8l5pycO15/view?usp=sharing'
 };
